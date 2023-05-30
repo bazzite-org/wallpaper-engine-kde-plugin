@@ -1,6 +1,6 @@
 Name: wallpaper-engine-kde-plugin
 
-%global commit 8f167c34ac82b00eb542a6597c60ec13d03b69ce
+%global commit 8bad33e75c47ff30d2697c964122923c6a69f813
 %global glslang_ver 11.8.0
 
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
