@@ -17,7 +17,7 @@ Source1: https://github.com/KhronosGroup/glslang/archive/refs/tags/%{glslang_ver
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: mpv-libs-devel vulkan-headers plasma-workspace-devel kf5-plasma-devel lz4-devel qt5-qtbase-private-devel qt5-qtx11extras-devel qt5-qtdeclarative-devel
-Requires: plasma-workspace gstreamer1-libav mpv-libs lz4 python3-websockets qt5-qtwebchannel qt5-qtwebsockets
+Requires: plasma-workspace gstreamer1-libav mpv-libs lz4 python3-websockets qt5-qtwebchannel-devel qt5-qtwebsockets-devel
 
 %description
 
