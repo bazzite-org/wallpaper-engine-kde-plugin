@@ -18,7 +18,7 @@ Requires: plasma-workspace gstreamer1-libav mpv-libs lz4 python3-websockets qt6-
 A wallpaper plugin integrating wallpaper engine into kde wallpaper setting.
 
 %prep
-git clone --depth 1 --branch qt6 %{url}.git
+git clone --depth 1 --branch main %{url}.git
 cd wallpaper-engine-kde-plugin
 git submodule update --init --recursive
 
