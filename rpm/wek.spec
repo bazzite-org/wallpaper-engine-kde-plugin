@@ -9,7 +9,7 @@ URL: https://github.com/catsout/wallpaper-engine-kde-plugin
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: extra-cmake-modules mpv-libs-devel vulkan-headers plasma-workspace-devel libplasma-devel lz4-devel qt6-qtbase-private-devel qt6-qtdeclarative-devel git
-Requires: plasma-workspace gstreamer1-libav mpv-libs lz4 python3-websockets qt6-qtwebchannel qt6-qtwebsockets 
+Requires: plasma-workspace gstreamer1-libav mpv-libs lz4 python3-websockets qt6-qtwebchannel qt6-qtwebsockets-devel
 
 %global _enable_debug_package 0
 %global debug_package %{nil}
