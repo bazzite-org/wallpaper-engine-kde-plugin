@@ -1,3 +1,6 @@
+%global _enable_debug_package 0
+%global debug_package %{nil}
+
 Name: wallpaper-engine-kde-plugin
 Version: {{{ git_dir_version }}}
 Release: 1%{?dist}
@@ -7,38 +10,54 @@ Group: Development/System
 License: GPLv2
 URL: https://github.com/catsout/wallpaper-engine-kde-plugin
 
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-BuildRequires: extra-cmake-modules mpv-libs-devel vulkan-headers plasma-workspace-devel libplasma-devel lz4-devel qt6-qtbase-private-devel qt6-qtdeclarative-devel git
-Requires: plasma-workspace gstreamer1-libav mpv-libs lz4 python3-websockets qt6-qtwebchannel-devel qt6-qtwebsockets-devel
+Patch1: 001-system-deps.patch
+Patch2: 002-fix-gcc-15.patch
 
-%global _enable_debug_package 0
-%global debug_package %{nil}
+BuildRequires: vulkan-loader-devel
+BuildRequires: plasma-workspace-devel
+BuildRequires: libplasma-devel
+BuildRequires: gstreamer1-plugin-libav
+BuildRequires: lz4-devel
+BuildRequires: mpv-libs-devel
+BuildRequires: python3-websockets
+
+BuildRequires: qt6-qtbase-private-devel
+BuildRequires: qt6-qtwebsockets-devel
+BuildRequires: qt6-qtwebchannel-devel
+
+BuildRequires: git
+BuildRequires: cmake
+BuildRequires: extra-cmake-modules
+
+BuildRequires: kf6-rpm-macros
+
+Requires:      python3-websockets
+Requires:      qt6-qtwebchannel
+Requires:      qt6-qtwebsockets-devel 
+Requires:      wallpaper-engine-kde-plugin-lib = %{version}-%{release}
 
 %description
 A wallpaper plugin integrating wallpaper engine into kde wallpaper setting.
 
 %prep
-git clone --depth 1 --branch main %{url}.git
-cd wallpaper-engine-kde-plugin
+git clone --depth 1 --branch main %{url}.git %{_builddir}/%{name}-%{version}
+
+cd %{_builddir}/%{name}-%{version}
 git submodule update --init --recursive
 
+%autopatch -p1
+
 %build
-cd wallpaper-engine-kde-plugin
-mkdir -p build && cd build
-cmake .. -DQT_MAJOR_VERSION=6 -DUSE_PLASMAPKG=ON
-%make_build
+cd %{_builddir}/%{name}-%{version}
+%cmake_kf6 -DQT_MAJOR_VERSION=6 -DBUILD_QML=ON -DUSE_PLASMAPKG=ON
+%cmake_build
 
 %install
-cd wallpaper-engine-kde-plugin
-rm -rf $RPM_BUILD_ROOT
-cd build
-make install DESTDIR=$RPM_BUILD_ROOT
-
-%clean
-rm -rf $RPM_BUILD_ROOT
+cd %{_builddir}/%{name}-%{version}
+%cmake_install
 
 %files
-%defattr(-,root,root,-)
-%{_libdir}/*
+%{_kf6_qmldir}/com/github/catsout/wallpaperEngineKde/*
 
 %changelog 
+%autochangelog
